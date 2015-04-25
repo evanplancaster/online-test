@@ -44,18 +44,33 @@
       var removedQuestion;
       var randomIndex;
 
+      function moveToTop(array, randIndex){
+        movedItem = array.splice(randIndex, 1)[0];
+        array.unshift(movedItem);
+      }
+
+      function shuffleChoices(choices, answers) {
+        var length = choices.length;
+        console.log("This question has " + length + " choices.");
+        var randomIndex;
+        for (var i = 0; i < length; i++) {
+          randomIndex = Math.floor(Math.random()*(length - i)) + i;
+          moveToTop(choices, randomIndex);
+          moveToTop(answers, randomIndex);
+        }
+      }
+
+
       for (var i = 0; i < numQuestions; i++){
         randomIndex = Math.floor(Math.random()*(numQuestions - i)) + i;
 
-        movedQuestion = questionsArray.splice(randomIndex, 1)[0];
-        questionsArray.unshift(movedQuestion);
+        shuffleChoices(choicesArray[randomIndex], answersArray[randomIndex]);
+        moveToTop(questionsArray, randomIndex);
+        moveToTop(choicesArray, randomIndex);
+        moveToTop(answersArray, randomIndex);
 
-        movedChoices = choicesArray.splice(randomIndex, 1)[0];
-        choicesArray.unshift(movedChoices);
-
-        movedAnswers = answersArray.splice(randomIndex, 1)[0];
-        answersArray.unshift(movedAnswers);
       }
+
 
 
     	return tstObject;
