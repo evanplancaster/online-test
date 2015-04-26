@@ -35,23 +35,26 @@
     The order of the choices within each question should also be randomized.
     */
     function RandomizeTest(tstObject){
+
       var questionsArray = tstObject.questions;
       var choicesArray = tstObject.choices;
       var answersArray = tstObject.answers;
-
       var numQuestions = questionsArray.length;
-      var numChoices;
-      var removedQuestion;
-      var randomIndex;
 
+      /*
+      MoveToTop accepts an array and an integer "index". The function pulls out the element whose position is "index" and moves it to the top of the array, pushing everything that had been above it down one position. It then returns that array.
+      */
       function moveToTop(array, randIndex){
-        movedItem = array.splice(randIndex, 1)[0];
+        var movedItem = array.splice(randIndex, 1)[0];
         array.unshift(movedItem);
+        return array;
       }
 
+      /*
+      ShuffleChoices accepts a question's choices array and its answer key array. It shuffles the arrays simultaneously so as to keep the choices and the answer key values in the proper order.
+      */
       function shuffleChoices(choices, answers) {
         var length = choices.length;
-        console.log("This question has " + length + " choices.");
         var randomIndex;
         for (var i = 0; i < length; i++) {
           randomIndex = Math.floor(Math.random()*(length - i)) + i;
@@ -60,7 +63,7 @@
         }
       }
 
-
+      var randomIndex;
       for (var i = 0; i < numQuestions; i++){
         randomIndex = Math.floor(Math.random()*(numQuestions - i)) + i;
 
@@ -70,9 +73,7 @@
         moveToTop(answersArray, randomIndex);
 
       }
-
-
-
+      
     	return tstObject;
     }
 
